@@ -83,7 +83,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     Bodypart = []
 
     for Bodypart in my_body:
-        Bodypart[Bodypart] = [my_body["x"], my_body["y"]]
+        Bodypart = [my_body["x"], my_body["y"]]
 
     for Bodypart in my_body:
         if my_head["x" - 1] == Bodypart["x"] and my_head["y"] == Bodypart["y"]: # Body is left of head, don't move left
