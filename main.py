@@ -120,24 +120,24 @@ def move(game_state: typing.Dict) -> typing.Dict:
     food = game_state['board']['food']
 
     ClosestFood = []
-    DistanceToFood = 100 # Big number so it's replaced by a smaller number later
+    ClosestDistanceToFood = 100 # Big number so it's replaced by a smaller number later
     for foodObject in food:
-        TempDistanceToFood = abs(foodObject["x"] - my_head["x"]) + abs(foodObject["y"] - my_head("y")) # calculates which fruit object is closest to head
-        if TempDistanceToFood < DistanceToFood: # If the current distance to food object is smaller than the previously closest food object, then replace it with the new one saved in temp
-            DistanceToFood = TempDistanceToFood # Sets the newly calculated distance as the smallest Distance to food
+        TempDistanceToFood = abs(foodObject["x"] - my_head["x"]) + abs(foodObject["y"] - my_head("y")) # calculates distance of current array fruit object to head
+        if TempDistanceToFood < ClosestDistanceToFood: # Checks if the new distance is closer to the previous one
+            ClosestDistanceToFood = TempDistanceToFood # Sets the distance as the new smallest one
             ClosestFood = foodObject # sets the current array foodObject as the Closest Food.
             
     if my_head["x"] > ClosestFood["x"]: # Check if the head is to the right of the closest food
-        if is_move_safe["left"]: # checks if the the next left move is safe
+        if is_move_safe["left"] == True: # checks if the the next left move is safe
             next_move = ["left"] # moves to the left
     if my_head["x"] < ClosestFood["x"]: # Check if the head is to the left of the closest food
-        if is_move_safe["right"]: # checks if the the next right move is safe
+        if is_move_safe["right"] == True: # checks if the the next right move is safe
             next_move = ["right"] # moves to the right
     if my_head["y"] > ClosestFood["y"]: # Check if the head is above the closest food
-        if is_move_safe["down"]: # checks if the the next down move is safe
+        if is_move_safe["down"] == True: # checks if the the next down move is safe
             next_move = ["down"] # moves down
     if my_head["y"] > ClosestFood["y"]: # Check if the head is under the closest food
-        if is_move_safe["up"]: # checks if the the next up move is safe
+        if is_move_safe["up"] == True: # checks if the the next up move is safe
             next_move = ["up"] # moves up
 
     print(f"MOVE {game_state['turn']}: {next_move}")
