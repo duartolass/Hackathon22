@@ -66,16 +66,16 @@ def move(game_state: typing.Dict) -> typing.Dict:
     board_width = game_state['board']['width']
     board_height = game_state['board']['height']
 
-    if my_head["y"] > board_height['board'][9]:  # Head is under border, don't move up
+    if my_head["y"] == board_height[10]:  # Head is under border, don't move up
         is_move_safe["up"] = False
 
-    elif my_head["y"] < board_height['board'][1]:  # Head is above border, don't move down
+    if my_head["y"] == board_height[0]:  # Head is above border, don't move down
         is_move_safe["down"] = False
 
-    elif my_head["x"] > board_width['board'][10]:  # Head is left of border, don't move right
+    if my_head["x"] == board_width[10]:  # Head is left of border, don't move right
         is_move_safe["right"] = False
     
-    elif my_head["x"] < board_width['board'][1]:  # Head is right of border, don't move left
+    if my_head["x"] == board_width[0]:  # Head is right of border, don't move left
         is_move_safe["left"] = False
 
     # TODO: Step 2 - Prevent your Battlesnake from colliding with itself
