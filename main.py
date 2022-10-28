@@ -78,7 +78,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     if my_head["x"] == 0:  # Head is right of border, don't move left
         is_move_safe["left"] = False
 
-    # TODO: Step 2 - Prevent your Battlesnake from colliding with itself
+    # Prevent Battlesnake from colliding with itself
     my_body = game_state['you']['body']
 
     Bodypart = []
