@@ -127,16 +127,16 @@ def move(game_state: typing.Dict) -> typing.Dict:
             ClosestDistanceToFood = TempDistanceToFood # Sets the distance as the new smallest one
             ClosestFood = foodObject # sets the current array foodObject as the Closest Food.
             
-    if my_head["x"] > ClosestFood["x"] and is_move_safe["left"] == True: # Check if the head is to the right of the closest food
+    if my_head["x"] > ClosestFood["x"]: # Check if the head is to the right of the closest food
 #        if is_move_safe["left"] == True: # checks if the the next left move is safe
             next_move = ["left"] # moves to the left
-    elif my_head["x"] < ClosestFood["x"] and is_move_safe["right"] == True: # Check if the head is to the left of the closest food
+    elif my_head["x"] < ClosestFood["x"]: # Check if the head is to the left of the closest food
 #       if is_move_safe["right"] == True: # checks if the the next right move is safe
             next_move = ["right"] # moves to the right
-    elif my_head["y"] > ClosestFood["y"] and is_move_safe["down"] == True: # Check if the head is above the closest food
+    elif my_head["y"] > ClosestFood["y"]: # Check if the head is above the closest food
 #        if is_move_safe["down"] == True: # checks if the the next down move is safe
             next_move = ["down"] # moves down
-    elif my_head["y"] > ClosestFood["y"] and is_move_safe["up"] == True: # Check if the head is under the closest food
+    elif my_head["y"] > ClosestFood["y"]: # Check if the head is under the closest food
 #        if is_move_safe["up"] == True: # checks if the the next up move is safe
             next_move = ["up"] # moves up
     else:
