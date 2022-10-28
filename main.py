@@ -85,8 +85,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     if my_head["x"] == 0:  # Head is right of border, don't move left
         is_move_safe["left"] = False
 
-    # Prevent Battlesnake from colliding with itself
-    # Prevent Battlesnake from colliding with other Battlesnakes
+    # Prevent Battlesnake from colliding with itself and other Battlesnakes
     snakes = game_state['board']['snakes']
 
     for snake in snakes:
