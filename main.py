@@ -122,7 +122,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     ClosestFood = []
     ClosestDistanceToFood = 100 # Big number so it's replaced by a smaller number later
     for foodObject in food:
-        TempDistanceToFood = abs(foodObject["x"] - my_head["x"]) + abs(foodObject["y"] - my_head("y")) # calculates distance of current array fruit object to head
+        TempDistanceToFood = abs(foodObject["x"] - my_head["x"]) + abs(foodObject["y"] - my_head["y"]) # calculates distance of current array fruit object to head
         if TempDistanceToFood < ClosestDistanceToFood: # Checks if the new distance is closer to the previous one
             ClosestDistanceToFood = TempDistanceToFood # Sets the distance as the new smallest one
             ClosestFood = foodObject # sets the current array foodObject as the Closest Food.
