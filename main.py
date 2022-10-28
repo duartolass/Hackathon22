@@ -80,8 +80,6 @@ def move(game_state: typing.Dict) -> typing.Dict:
 
     # TODO: Step 2 - Prevent your Battlesnake from colliding with itself
     my_body = game_state['you']['body']
-    print(my_body)
-    print(Bodypart)
 
     Bodypart = []
 
@@ -89,6 +87,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     next_move_right = [my_head["x"] + 1, my_head["y"]]
     next_move_up = [my_head["x"], my_head["y"] + 1]
     next_move_down = [my_head["x"], my_head["y"] - 1]
+
     for Bodypart in my_body:
         tempBp = [Bodypart["x"], Bodypart["y"]]
         if next_move_left == tempBp: # Body is left of head, don't move left
