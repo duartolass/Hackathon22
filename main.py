@@ -117,8 +117,15 @@ def move(game_state: typing.Dict) -> typing.Dict:
     next_move = random.choice(safe_moves)
 
     # TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-    # food = game_state['board']['food']
+    food = game_state['board']['food']
 
+    ClosestFood = []
+    DistanceToFood = 99
+    for foodObject in food:
+        TempDistanceToFood = abs(foodObject["x"] - my_head["x"]) + abs(foodObject["y"] - my_head("y"))
+        if TempDistanceToFood < DistanceToFood:
+            DistanceToFood = TempDistanceToFood
+            ClosestFood = foodObject
     print(f"MOVE {game_state['turn']}: {next_move}")
     return {"move": next_move}
 
