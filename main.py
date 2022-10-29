@@ -147,11 +147,11 @@ def move(game_state: typing.Dict) -> typing.Dict:
     # Check if the next move is risky from other opponents
     opponents = ['snakes']
     for opponent in opponents[1:]:
-        for Opponenthead in opponent['body'][0]:
-            tempOpHeadAbove = [Opponenthead["x"], Opponenthead[["y"] + 1]]
-            tempOpHeadBelow = [Opponenthead["x"], Opponenthead[["y"] - 1]]
-            tempOpHeadRight = [Opponenthead[["x"] + 1], Opponenthead["y"]]
-            tempOpHeadLeft = [Opponenthead[["x"] - 1], Opponenthead["y"]]
+        for Opponenthead in opponent['head']:
+            tempOpHeadAbove = Opponenthead["x"], Opponenthead["y"] + 1
+            tempOpHeadBelow = Opponenthead["x"], Opponenthead["y"] - 1
+            tempOpHeadRight = Opponenthead["x"] + 1, Opponenthead["y"]
+            tempOpHeadLeft = Opponenthead["x"] - 1, Opponenthead["y"]
             if next_move_left == tempOpHeadAbove or next_move_left == tempOpHeadBelow or next_move_left == tempOpHeadLeft or next_move_left == tempOpHeadRight: # Opponent next movement is left of head, don't move left
                 is_move_safe["left"] = False
 
