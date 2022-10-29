@@ -50,7 +50,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     my_head = game_state["you"]["body"][0]  # Coordinates of head
     my_neck = game_state["you"]["body"][1]  # Coordinates of "neck"
 
-    op_head = game_state["board"]["snakes"][1:]["head"]
+    op_head = game_state['board']['snakes'][1:]['head']
 
     
     # Next move for each direction
