@@ -45,6 +45,7 @@ def end(game_state: typing.Dict):
 def move(game_state: typing.Dict) -> typing.Dict:
 
     is_move_safe = {"up": True, "down": True, "left": True, "right": True}
+    is_move_risky = {"up": True, "down": True, "left": True, "right": True}
 
     # Prevent Battlesnake from moving backwards
     my_head = game_state["you"]["body"][0]  # Coordinates of head
@@ -59,15 +60,19 @@ def move(game_state: typing.Dict) -> typing.Dict:
 
     if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
         is_move_safe["left"] = False
+        is_move_risky["left"] = False
 
     elif my_neck["x"] > my_head["x"]:  # Neck is right of head, don't move right
         is_move_safe["right"] = False
+        is_move_risky["right"] = False
 
     elif my_neck["y"] < my_head["y"]:  # Neck is below head, don't move down
         is_move_safe["down"] = False
+        is_move_risky["down"] = False
 
     elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
         is_move_safe["up"] = False
+        is_move_risky["up"] = False
 
     # Prevent Battlesnake from moving out of bounds
     board_width = game_state['board']['width'] - 1
@@ -75,15 +80,19 @@ def move(game_state: typing.Dict) -> typing.Dict:
 
     if my_head["y"] == board_height:  # Head is under border, don't move up
         is_move_safe["up"] = False
+        is_move_risky["up"] = False
 
     if my_head["y"] == 0:  # Head is above border, don't move down
         is_move_safe["down"] = False
+        is_move_risky["down"] = False
 
     if my_head["x"] == board_width:  # Head is left of border, don't move right
         is_move_safe["right"] = False
+        is_move_risky["right"] = False
     
     if my_head["x"] == 0:  # Head is right of border, don't move left
         is_move_safe["left"] = False
+        is_move_risky["left"] = False
 
     # Prevent Battlesnake from colliding with itself and other Battlesnakes
     snakes = game_state['board']['snakes']
@@ -93,15 +102,19 @@ def move(game_state: typing.Dict) -> typing.Dict:
             tempBp = [Bodypart["x"], Bodypart["y"]]
             if next_move_left == tempBp: # Body is left of head, don't move left
                 is_move_safe["left"] = False
+                is_move_risky["left"] = False
 
             if next_move_right == tempBp: # Body is right of head, don't move right
                 is_move_safe["right"] = False
+                is_move_risky["right"] = False
 
             if next_move_up == tempBp: # Body is above head, don't move up
                 is_move_safe["up"] = False
+                is_move_risky["up"] = False
             
             if next_move_down == tempBp: # Body is under head, don't move down
                 is_move_safe["down"] = False
+                is_move_risky["down"] = False
 
     # Choose a random move from the safe ones
     # next_move = random.choice(safe_moves)
@@ -126,22 +139,36 @@ def move(game_state: typing.Dict) -> typing.Dict:
         for OpponentMovement in op_next_move:
             if OpponentMovement == next_move_left:
                 is_move_safe["left"] = False
+                is_move_risky["left"] = True
             if OpponentMovement == next_move_right:
                 is_move_safe["right"] = False
+                is_move_risky["right"] = True
             if OpponentMovement == next_move_up:
                 is_move_safe["up"] = False
+                is_move_risky["up"] = True
             if OpponentMovement == next_move_down:
                 is_move_safe["down"] = False
+                is_move_risky["down"] = True
 
     # Are there any safe moves left?
     safe_moves = []
     for move, isSafe in is_move_safe.items():
         if isSafe:
             safe_moves.append(move)
+    
+    # Are there any risky moves left?
+    risky_moves = []
+    for move, isRisky in is_move_risky.items():
+        if isRisky:
+            risky_moves.append(move)
 
     if len(safe_moves) == 0:
-        print(f"MOVE {game_state['turn']}: No safe moves detected! Moving down")
-        return {"move": "down"}
+        if len(risky_moves) == 0:
+            print(f"MOVE {game_state['turn']}: No safe moves detected! Moving down")
+            return {"move": "down"}
+        else:
+            random.choice(risky_moves)
+    
 
     # Move towards food instead of random, to regain health and survive longer
     food = game_state['board']['food']
