@@ -49,6 +49,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     # Prevent Battlesnake from moving backwards
     my_head = game_state["you"]["body"][0]  # Coordinates of head
     my_neck = game_state["you"]["body"][1]  # Coordinates of "neck"
+    my_id = game_state["you"]["id"] # Id of snake
     
     # Next move for each direction
     next_move_left = [my_head["x"] - 1, my_head["y"]]
@@ -107,7 +108,11 @@ def move(game_state: typing.Dict) -> typing.Dict:
 
     # Check if the next move is risky from other opponents
     op_next_move = []
-    for opponent in snakes[1:]:
+    snake_ids = []
+    for ekans in snakes:
+        if ekans['id'] != my_id:
+            snake_ids.append(ekans)
+    for opponent in snake_ids:    
         Opponenthead = opponent['head']
         op_next_move_left = [Opponenthead["x"] - 1, Opponenthead["y"]]
         op_next_move_right = [Opponenthead["x"] + 1, Opponenthead["y"]]
