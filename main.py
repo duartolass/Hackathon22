@@ -152,16 +152,16 @@ def move(game_state: typing.Dict) -> typing.Dict:
             tempOpHeadBelow = [Opponenthead["x"], Opponenthead[["y"] - 1]]
             tempOpHeadRight = [Opponenthead[["x"] + 1], Opponenthead["y"]]
             tempOpHeadLeft = [Opponenthead[["x"] - 1], Opponenthead["y"]]
-            if next_move_left == tempOpHeadAbove or tempOpHeadBelow or tempOpHeadLeft or tempOpHeadRight: # Opponent next movement is left of head, don't move left
+            if next_move_left == tempOpHeadAbove or next_move_left == tempOpHeadBelow or next_move_left == tempOpHeadLeft or next_move_left == tempOpHeadRight: # Opponent next movement is left of head, don't move left
                 is_move_safe["left"] = False
 
-            if next_move_right == tempOpHeadAbove or tempOpHeadBelow or tempOpHeadLeft or tempOpHeadRight: # Opponent next movement is right of head, don't move right
+            if next_move_right == tempOpHeadAbove or next_move_right == tempOpHeadBelow or next_move_right == tempOpHeadLeft or next_move_right == tempOpHeadRight: # Opponent next movement is right of head, don't move right
                 is_move_safe["right"] = False
 
-            if next_move_up == tempOpHeadAbove or tempOpHeadBelow or tempOpHeadLeft or tempOpHeadRight: # Opponent next movement is above head, don't move up
+            if next_move_up == tempOpHeadAbove or next_move_up == tempOpHeadBelow or next_move_up == tempOpHeadLeft or next_move_up == tempOpHeadRight: # Opponent next movement is above head, don't move up
                 is_move_safe["up"] = False
             
-            if next_move_down == tempOpHeadAbove or tempOpHeadBelow or tempOpHeadLeft or tempOpHeadRight: # Opponent next movement is below of head, don't move down
+            if next_move_down == tempOpHeadAbove or next_move_down == tempOpHeadBelow or next_move_down == tempOpHeadLeft or next_move_down == tempOpHeadRight: # Opponent next movement is below of head, don't move down
                 is_move_safe["down"] = False
 
     print(f"MOVE {game_state['turn']}: {next_move}")
