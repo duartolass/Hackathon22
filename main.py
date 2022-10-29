@@ -140,7 +140,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
 
         for s in snake_ids:
             OpponentLength = s["length"]
-            if my_length <= Opponenthead:
+            if my_length <= OpponentLength:
                 for OpponentMovement in op_next_move:
                     if OpponentMovement == next_move_left:
                         is_move_safe["left"] = False
