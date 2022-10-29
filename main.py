@@ -109,16 +109,6 @@ def move(game_state: typing.Dict) -> typing.Dict:
             if next_move_down == tempBp: # Body is under head, don't move down
                 is_move_safe["down"] = False
 
-    # Are there any safe moves left?
-    safe_moves = []
-    for move, isSafe in is_move_safe.items():
-        if isSafe:
-            safe_moves.append(move)
-
-    if len(safe_moves) == 0:
-        print(f"MOVE {game_state['turn']}: No safe moves detected! Moving down")
-        return {"move": "down"}
-
     # Choose a random move from the safe ones
     # next_move = random.choice(safe_moves)
 
@@ -163,6 +153,16 @@ def move(game_state: typing.Dict) -> typing.Dict:
         next_move = "up" # moves up
     else:
         next_move = random.choice(safe_moves)
+
+    # Are there any safe moves left?
+    safe_moves = []
+    for move, isSafe in is_move_safe.items():
+        if isSafe:
+            safe_moves.append(move)
+
+    if len(safe_moves) == 0:
+        print(f"MOVE {game_state['turn']}: No safe moves detected! Moving down")
+        return {"move": "down"}
 
     print(f"MOVE {game_state['turn']}: {next_move}")
     return {"move": next_move}
