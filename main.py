@@ -50,6 +50,8 @@ def move(game_state: typing.Dict) -> typing.Dict:
     my_head = game_state["you"]["body"][0]  # Coordinates of head
     my_neck = game_state["you"]["body"][1]  # Coordinates of "neck"
 
+    op_head = game_state["board"]["snakes"]["head"]
+
     
     # Next move for each direction
     next_move_left = [my_head["x"] - 1, my_head["y"]]
@@ -58,10 +60,10 @@ def move(game_state: typing.Dict) -> typing.Dict:
     next_move_down = [my_head["x"], my_head["y"] - 1]
 
     # Next move for opponents
-    op_next_move_left = []
-    op_next_move_right = []
-    op_next_move_up = []
-    op_next_move_down = []
+    op_next_move_left = [op_head["x"] - 1, op_head["y"]]
+    op_next_move_right = [op_head["x"] + 1, op_head["y"]]
+    op_next_move_up = [op_head["x"], op_head["y"] + 1]
+    op_next_move_down = [op_head["x"], op_head["y"] - 1]
 
     if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
         is_move_safe["left"] = False
@@ -148,20 +150,16 @@ def move(game_state: typing.Dict) -> typing.Dict:
     opponents = ['snakes']
     for opponent in opponents[1:]:
         for Opponenthead in opponent['head']:
-            tempOpHeadAbove = [Opponenthead["x"], Opponenthead["y"] + 1]
-            tempOpHeadBelow = [Opponenthead["x"], Opponenthead["y"] - 1]
-            tempOpHeadRight = [Opponenthead["x"] + 1, Opponenthead["y"]]
-            tempOpHeadLeft = [Opponenthead["x"] - 1, Opponenthead["y"]]
-            if next_move_left == tempOpHeadAbove or next_move_left == tempOpHeadBelow or next_move_left == tempOpHeadLeft or next_move_left == tempOpHeadRight: # Opponent next movement is left of head, don't move left
+            if next_move_left == op_next_move_up or next_move_left == op_next_move_down or next_move_left == op_next_move_left or next_move_left == op_next_move_right: # Opponent next movement is left of head, don't move left
                 is_move_safe["left"] = False
 
-            if next_move_right == tempOpHeadAbove or next_move_right == tempOpHeadBelow or next_move_right == tempOpHeadLeft or next_move_right == tempOpHeadRight: # Opponent next movement is right of head, don't move right
+            if next_move_right == op_next_move_up or next_move_right == op_next_move_down or next_move_right == op_next_move_left or next_move_right == op_next_move_right: # Opponent next movement is right of head, don't move right
                 is_move_safe["right"] = False
 
-            if next_move_up == tempOpHeadAbove or next_move_up == tempOpHeadBelow or next_move_up == tempOpHeadLeft or next_move_up == tempOpHeadRight: # Opponent next movement is above head, don't move up
+            if next_move_up == op_next_move_up or next_move_up == op_next_move_down or next_move_up == op_next_move_left or next_move_up == op_next_move_right: # Opponent next movement is above head, don't move up
                 is_move_safe["up"] = False
             
-            if next_move_down == tempOpHeadAbove or next_move_down == tempOpHeadBelow or next_move_down == tempOpHeadLeft or next_move_down == tempOpHeadRight: # Opponent next movement is below of head, don't move down
+            if next_move_down == op_next_move_up or next_move_down == op_next_move_down or next_move_down == op_next_move_left or next_move_down == op_next_move_right: # Opponent next movement is below of head, don't move down
                 is_move_safe["down"] = False
 
     print(f"MOVE {game_state['turn']}: {next_move}")
