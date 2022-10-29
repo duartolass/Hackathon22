@@ -52,9 +52,23 @@ def move(game_state: typing.Dict) -> typing.Dict:
     
     
     opponents = ["snakes"]
-    for OpponentHead in opponents:
-        OpponentHead = opponents['body'][0]
-        print(OpponentHead[["x"] + ["y"]])
+    for opponent in opponents[1:]:
+        for Opponenthead in opponent['head']:
+            tempOpHeadAbove = [Opponenthead["x"], Opponenthead[["y"]] + 1]
+            tempOpHeadBelow = [Opponenthead["x"], Opponenthead[["y"]] - 1]
+            tempOpHeadRight = [Opponenthead["y"], Opponenthead[["x"]] + 1]
+            tempOpHeadLeft = [Opponenthead["y"], Opponenthead[["x"]] - 1]
+            if next_move_left == tempOpHeadAbove or tempOpHeadBelow or tempOpHeadLeft or tempOpHeadRight: # Opponent next movement is left of head, don't move left
+                is_move_safe["left"] = False
+
+            if next_move_right == tempOpHeadAbove or tempOpHeadBelow or tempOpHeadLeft or tempOpHeadRight: # Opponent next movement is right of head, don't move right
+                is_move_safe["right"] = False
+
+            if next_move_up == tempOpHeadAbove or tempOpHeadBelow or tempOpHeadLeft or tempOpHeadRight: # Opponent next movement is above head, don't move up
+                is_move_safe["up"] = False
+            
+            if next_move_down == tempOpHeadAbove or tempOpHeadBelow or tempOpHeadLeft or tempOpHeadRight: # Opponent next movement is below of head, don't move down
+                is_move_safe["down"] = False
 
     
     # Next move for each direction
