@@ -145,9 +145,9 @@ def move(game_state: typing.Dict) -> typing.Dict:
         next_move = random.choice(safe_moves)
 
     # Check if the next move is risky from other opponents
-    opponents = ['snake']
+    opponents = ['snakes']
     for opponent in opponents[1:]:
-        for Opponenthead in opponent['head']:
+        for Opponenthead in opponent['body'][0]:
             tempOpHeadAbove = [Opponenthead["x"], Opponenthead[["y"] + 1]]
             tempOpHeadBelow = [Opponenthead["x"], Opponenthead[["y"] - 1]]
             tempOpHeadRight = [Opponenthead[["x"] + 1], Opponenthead["y"]]
