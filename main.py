@@ -59,12 +59,6 @@ def move(game_state: typing.Dict) -> typing.Dict:
     next_move_up = [my_head["x"], my_head["y"] + 1]
     next_move_down = [my_head["x"], my_head["y"] - 1]
 
-    # Next move for opponents
-    op_next_move_left = [op_head["x"] - 1, op_head["y"]]
-    op_next_move_right = [op_head["x"] + 1, op_head["y"]]
-    op_next_move_up = [op_head["x"], op_head["y"] + 1]
-    op_next_move_down = [op_head["x"], op_head["y"] - 1]
-
     if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
         is_move_safe["left"] = False
 
@@ -137,19 +131,27 @@ def move(game_state: typing.Dict) -> typing.Dict:
         next_move = random.choice(safe_moves)
 
     # Check if the next move is risky from other opponents
+    op_next_move = []
     for opponent in snakes:
         Opponenthead = opponent['head']
-        if next_move_left == op_next_move_down or next_move_left == op_next_move_down or next_move_left == op_next_move_left or next_move_left == op_next_move_right: # Opponent next movement is left of head, don't move left
-            is_move_safe["left"] = False
+        op_next_move_left = [op_head["x"] - 1, op_head["y"]]
+        op_next_move_right = [op_head["x"] + 1, op_head["y"]]
+        op_next_move_up = [op_head["x"], op_head["y"] + 1]
+        op_next_move_down = [op_head["x"], op_head["y"] - 1]
+        op_next_move.append(op_next_move_left)
+        op_next_move.append(op_next_move_right)
+        op_next_move.append(op_next_move_up)
+        op_next_move.append(op_next_move_down)
 
-        if next_move_right == op_next_move_down or next_move_right == op_next_move_down or next_move_right == op_next_move_left or next_move_right == op_next_move_right: # Opponent next movement is right of head, don't move right
-            is_move_safe["right"] = False
-
-        if next_move_up == op_next_move_down or next_move_up == op_next_move_down or next_move_up == op_next_move_left or next_move_up == op_next_move_right: # Opponent next movement is above head, don't move up
-            is_move_safe["up"] = False
-        
-        if next_move_down == op_next_move_down or next_move_down == op_next_move_down or next_move_down == op_next_move_left or next_move_down == op_next_move_right: # Opponent next movement is below of head, don't move down
-            is_move_safe["down"] = False
+        for OpponentMovement in op_next_move:
+            if OpponentMovement == next_move_left:
+                is_move_safe["left"] = False
+            if OpponentMovement == next_move_right:
+                is_move_safe["right"] = False
+            if OpponentMovement == next_move_up:
+                is_move_safe["up"] = False
+            if OpponentMovement == next_move_down:
+                is_move_safe["down"] = False
 
     # Are there any safe moves left?
     safe_moves = []
