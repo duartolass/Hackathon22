@@ -108,28 +108,6 @@ def move(game_state: typing.Dict) -> typing.Dict:
     # Choose a random move from the safe ones
     # next_move = random.choice(safe_moves)
 
-    # Move towards food instead of random, to regain health and survive longer
-    food = game_state['board']['food']
-
-    ClosestFood = []
-    ClosestDistanceToFood = 100 # Big number so it's replaced by a smaller number later
-    for foodObject in food:
-        TempDistanceToFood = abs(foodObject["x"] - my_head["x"]) + abs(foodObject["y"] - my_head["y"]) # calculates distance of current array fruit object to head
-        if TempDistanceToFood < ClosestDistanceToFood: # Checks if the new distance is closer to the previous one
-            ClosestDistanceToFood = TempDistanceToFood # Sets the distance as the new smallest one
-            ClosestFood = foodObject # sets the current array foodObject as the Closest Food.
-            
-    if my_head["x"] > ClosestFood["x"] and is_move_safe["left"]: # Check if the head is to the right of the closest food and it's safe to move to the left
-        next_move = "left" # moves to the left
-    elif my_head["x"] < ClosestFood["x"] and is_move_safe["right"]: # Check if the head is to the left of the closest food and it's safe to move to the right
-        next_move = "right" # moves to the right
-    elif my_head["y"] > ClosestFood["y"] and is_move_safe["down"]: # Check if the head is above the closest food and it's safe to move down
-        next_move = "down" # moves down
-    elif my_head["y"] < ClosestFood["y"] and is_move_safe["up"]: # Check if the head is under the closest food and it's safe to move up
-        next_move = "up" # moves up
-    else:
-        next_move = random.choice(safe_moves)
-
     # Check if the next move is risky from other opponents
     op_next_move = []
     for opponent in snakes:
@@ -162,6 +140,28 @@ def move(game_state: typing.Dict) -> typing.Dict:
     if len(safe_moves) == 0:
         print(f"MOVE {game_state['turn']}: No safe moves detected! Moving down")
         return {"move": "down"}
+
+    # Move towards food instead of random, to regain health and survive longer
+    food = game_state['board']['food']
+
+    ClosestFood = []
+    ClosestDistanceToFood = 100 # Big number so it's replaced by a smaller number later
+    for foodObject in food:
+        TempDistanceToFood = abs(foodObject["x"] - my_head["x"]) + abs(foodObject["y"] - my_head["y"]) # calculates distance of current array fruit object to head
+        if TempDistanceToFood < ClosestDistanceToFood: # Checks if the new distance is closer to the previous one
+            ClosestDistanceToFood = TempDistanceToFood # Sets the distance as the new smallest one
+            ClosestFood = foodObject # sets the current array foodObject as the Closest Food.
+            
+    if my_head["x"] > ClosestFood["x"] and is_move_safe["left"]: # Check if the head is to the right of the closest food and it's safe to move to the left
+        next_move = "left" # moves to the left
+    elif my_head["x"] < ClosestFood["x"] and is_move_safe["right"]: # Check if the head is to the left of the closest food and it's safe to move to the right
+        next_move = "right" # moves to the right
+    elif my_head["y"] > ClosestFood["y"] and is_move_safe["down"]: # Check if the head is above the closest food and it's safe to move down
+        next_move = "down" # moves down
+    elif my_head["y"] < ClosestFood["y"] and is_move_safe["up"]: # Check if the head is under the closest food and it's safe to move up
+        next_move = "up" # moves up
+    else:
+        next_move = random.choice(safe_moves)
 
     print(f"MOVE {game_state['turn']}: {next_move}")
     return {"move": next_move}
