@@ -53,7 +53,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     
     opponents = ["snakes"]
     for OpponentHead in opponents:
-        OpponentHead = opponents['head']
+        OpponentHead = opponents['body'][0]
         print(OpponentHead[["x"] + ["y"]])
 
     
