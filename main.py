@@ -49,6 +49,12 @@ def move(game_state: typing.Dict) -> typing.Dict:
     # Prevent Battlesnake from moving backwards
     my_head = game_state["you"]["body"][0]  # Coordinates of head
     my_neck = game_state["you"]["body"][1]  # Coordinates of "neck"
+    
+    
+    opponents = ["snakes"]
+    for OpponentHead in opponents:
+        OpponentHead = opponents['head']
+        print(OpponentHead[["x"] + ["y"]])
 
     
     # Next move for each direction
@@ -56,6 +62,12 @@ def move(game_state: typing.Dict) -> typing.Dict:
     next_move_right = [my_head["x"] + 1, my_head["y"]]
     next_move_up = [my_head["x"], my_head["y"] + 1]
     next_move_down = [my_head["x"], my_head["y"] - 1]
+
+    # Next move for opponents
+    op_next_move_left = []
+    op_next_move_right = []
+    op_next_move_up = []
+    op_next_move_down = []
 
     if my_neck["x"] < my_head["x"]:  # Neck is left of head, don't move left
         is_move_safe["left"] = False
@@ -116,7 +128,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     # Choose a random move from the safe ones
     # next_move = random.choice(safe_moves)
 
-    # TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
+    # Move towards food instead of random, to regain health and survive longer
     food = game_state['board']['food']
 
     ClosestFood = []
@@ -137,6 +149,9 @@ def move(game_state: typing.Dict) -> typing.Dict:
         next_move = "up" # moves up
     else:
         next_move = random.choice(safe_moves)
+
+    # Check if the next move is risky from other opponents
+    
 
     print(f"MOVE {game_state['turn']}: {next_move}")
     return {"move": next_move}
