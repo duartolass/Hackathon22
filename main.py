@@ -167,7 +167,16 @@ def move(game_state: typing.Dict) -> typing.Dict:
             print(f"MOVE {game_state['turn']}: No safe moves detected! Moving down")
             return {"move": "down"}
         else:
-            random.choice(risky_moves)
+            if my_head["x"] > ClosestFood["x"] and is_move_risky["left"]: # Check if the head is to the right of the closest food and it's safe to move to the left
+                next_move = "left" # moves to the left
+            elif my_head["x"] < ClosestFood["x"] and is_move_risky["right"]: # Check if the head is to the left of the closest food and it's safe to move to the right
+                next_move = "right" # moves to the right
+            elif my_head["y"] > ClosestFood["y"] and is_move_risky["down"]: # Check if the head is above the closest food and it's safe to move down
+                next_move = "down" # moves down
+            elif my_head["y"] < ClosestFood["y"] and is_move_risky["up"]: # Check if the head is under the closest food and it's safe to move up
+                next_move = "up" # moves up
+            else:
+                next_move = random.choice(risky_moves)
     
 
     # Move towards food instead of random, to regain health and survive longer
