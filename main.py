@@ -136,7 +136,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
 
     # Check if the next move is risky from other opponents
     opponents = game_state['board']['snakes']
-    for opponent in opponents[1:]:
+    for opponent in opponents[0:]:
         for Opponenthead in opponent['head']:
             tempOpHeadAbove = [Opponenthead["x"], Opponenthead["y"] + 1]
             tempOpHeadBelow = [Opponenthead["x"], Opponenthead["y"] - 1]
